@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoxCalc - Voice Controlled Calculator</title>
+    <meta name="description" content="A premium, voice-controlled calculator system with high-accuracy speech recognition and text-to-speech output.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>VoxCalc</h1>
+            <p>Voice-Powered Calculations</p>
+        </header>
+
+        <main class="calculator-card" id="calculator">
+            <div class="display">
+                <div class="expression-row" id="expression">Ready to listen...</div>
+                <div class="result-row" id="result">0</div>
+            </div>
+
+            <div class="voice-controls">
+                <button id="voice-btn" class="voice-btn" aria-label="Start Voice Recognition">
+                    <i class="fas fa-microphone"></i>
+                    <span class="pulse"></span>
+                </button>
+                <div class="status" id="status">Tap the mic to start</div>
+            </div>
+
+            <div class="keypad">
+                <!-- Top Row: Utilities -->
+                <button class="key util" data-command="clear">AC</button>
+                <button class="key util" data-val="plus-minus">±</button>
+                <button class="key util" data-val="%">%</button>
+                <button class="key op" data-val="/">÷</button>
+
+                <!-- Row 1: 7-9 -->
+                <button class="key" data-val="7">7</button>
+                <button class="key" data-val="8">8</button>
+                <button class="key" data-val="9">9</button>
+                <button class="key op" data-val="*">×</button>
+
+                <!-- Row 2: 4-6 -->
+                <button class="key" data-val="4">4</button>
+                <button class="key" data-val="5">5</button>
+                <button class="key" data-val="6">6</button>
+                <button class="key op" data-val="-">−</button>
+
+                <!-- Row 3: 1-3 -->
+                <button class="key" data-val="1">1</button>
+                <button class="key" data-val="2">2</button>
+                <button class="key" data-val="3">3</button>
+                <button class="key op" data-val="+">+</button>
+
+                <!-- Row 4: 0, ., = -->
+                <button class="key zero" data-val="0">0</button>
+                <button class="key" data-val=".">.</button>
+                <button class="key op equal" data-command="calculate">=</button>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
