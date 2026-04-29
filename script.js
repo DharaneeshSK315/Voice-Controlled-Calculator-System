@@ -73,11 +73,11 @@ class VoxCalc {
 
     toggleListening() {
         // If running inside our Android App, use the native bridge
-        if (window.AndroidInterface) {
+        if (window.AndroidInterface || window.isAndroidApp) {
             if (this.isListening) {
-                window.AndroidInterface.stopListening();
+                if(window.AndroidInterface) window.AndroidInterface.stopListening();
             } else {
-                window.AndroidInterface.startListening();
+                if(window.AndroidInterface) window.AndroidInterface.startListening();
             }
             return;
         }
