@@ -72,10 +72,23 @@ class VoxCalc {
     }
 
     toggleListening() {
-        if (this.isListening) {
-            this.recognition.stop();
-        } else {
-            this.recognition.start();
+        // If running inside our Android App, use the native bridge
+        if (window.AndroidInterface) {
+            if (this.isListening) {
+                window.AndroidInterface.stopListening();
+            } else {
+                window.AndroidInterface.startListening();
+            }
+            return;
+        }
+
+        // Fallback to Web Speech API for browsers
+        if (this.recognition) {
+            if (this.isListening) {
+                this.recognition.stop();
+            } else {
+                this.recognition.start();
+            }
         }
     }
 
@@ -214,6 +227,42 @@ class VoxCalc {
 }
 
 // Initialize the app
+let app;
 window.addEventListener('DOMContentLoaded', () => {
-    const app = new VoxCalc();
+    app = new VoxCalc();
 });
+
+// --- ANDROID NATIVE BRIDGE CALLBACKS ---
+// The Android app will call these functions directly from Kotlin
+
+window.onNativeSpeechStart = function() {
+    if(app) {
+        app.isListening = true;
+        app.voiceBtn.classList.add('listening');
+        app.statusText.innerText = "Listening...";
+        app.statusText.classList.add('active');
+    }
+};
+
+window.onNativeSpeechResult = function(transcript, isFinal) {
+    if(app) {
+        app.processSpeech(transcript);
+        if (isFinal) {
+            app.calculateFromSpeech(transcript);
+        }
+    }
+};
+
+window.onNativeSpeechError = function(error) {
+    if(app) {
+        console.error('Android Speech error:', error);
+        app.stopListening();
+        app.statusText.innerText = `Error: ${error}`;
+    }
+};
+
+window.onNativeSpeechEnd = function() {
+    if(app) {
+        app.stopListening();
+    }
+};
